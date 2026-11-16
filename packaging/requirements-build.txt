@@ -1,0 +1,2 @@
+# Extra packages needed only to BUILD the installers (the app's own list is ../requirements.txt)
+pyinstaller>=6.10
