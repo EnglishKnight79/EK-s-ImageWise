@@ -71,6 +71,9 @@ jobs:
           cache-dependency-path: |
             requirements.txt
             packaging/requirements-build.txt
+      - name: Pin Intel-compatible Numba dependencies
+        if: ${{ matrix.runner == 'macos-15-intel' }}
+        run: python -m pip install "numba==0.62.1" "llvmlite==0.45.1"    
       - name: Install create-dmg (optional, for a nicer disk-image window)
         run: brew install create-dmg || true
       - name: Install Python packages
