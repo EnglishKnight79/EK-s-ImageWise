@@ -1,139 +1,128 @@
-# EK's Image Wise
+# EK's ImageWise
 
-Load an image, crop it, resize it, and (with the built-in plugins) remove the background, add alpha overlays,
-preview the result, export it.
+**A practical desktop image editor with a collection of creative tools
+built in.**
 
-## Your splash screen and icon
+EK's ImageWise brings everyday image-editing features together in one
+desktop application. Adjust and enhance images, work with backgrounds,
+and explore additional creative tools through its plugin system.
 
-Put two files in the project folder, next to `main.py` (the names must match exactly):
+## What you can do
 
-* `Icon_1.png` - the app icon (taskbar on Windows, Dock on Mac, window corner). Use a square PNG with a
-  transparent background, 512 x 512 or bigger. The installers' icons are made from it automatically.
-* `splash.png` - the splash screen shown while the app starts (about 900 pixels wide works well; wider
-  pictures are scaled down). It stays on screen for at least a moment so it can be seen.
+ImageWise includes a range of image-editing tools, including:
 
-If either file is missing the app simply uses its built-in icon / starts without a splash. The installers
-include both files.
+-   **Colour and brightness adjustments** -- make changes to the look
+    and feel of an image.
+-   **Filters and effects** -- apply creative treatments to your images.
+-   **Background removal** -- remove image backgrounds using the
+    built-in background-removal feature.
+-   **Cropping and shapes** -- crop images and work with shaped layouts.
+-   **Text tools** -- add text to your image designs.
+-   **Overlays** -- add visual elements and alpha overlays.
+-   **Pattern and poster tools** -- create pattern-based and
+    poster-style designs.
 
-## Installers (Windows and Mac)
+The application also supports plugins, allowing its tools to be
+organised as additional features.
 
-To make a proper installer for Windows or a `.dmg` for Mac, read **packaging/PACKAGING.md**.
-Short version: push the project to GitHub and run the "Build installers" workflow (it builds the
-Windows setup file and both Mac disk images), or double-click `packaging/build_windows.bat` on a PC /
-run `./packaging/build_mac.sh` on a Mac.
+## Download
 
-## Run it from source (Windows or Mac)
+Download the installer for your computer from the project's **GitHub
+Releases** page:
 
-1. Install Python 3.10 or newer (python.org). On Windows tick "Add Python to PATH".
-2. Open a terminal in this folder and run:
+**[Download EK's
+ImageWise](https://github.com/EnglishKnight79/EK-s-ImageWise/releases)**
 
-       python -m venv venv
-       venv\Scripts\activate          (Windows)
-       source venv/bin/activate       (Mac)
-       pip install -r requirements.txt
-       python main.py
+Choose the file that matches your computer:
 
-## How to use
+  -----------------------------------------------------------------------
+  Your computer                       Installer
+  ----------------------------------- -----------------------------------
+  Windows 10 or 11 (64-bit)           `EKsImageWise-Setup-1.0.0.exe`
 
-- File > Open (or drag an image onto the window). Open starts a new job; the alphas,
-  canvas colour and DPI you had are kept for the next client image (plugins keep their own settings).
-- **Undo / Redo**: the red and green buttons top left (Ctrl+Z, Ctrl+Y or Ctrl+Shift+Z).
-  Every setting is covered: crop, photos, placement, cut-outs, canvas, pattern,
-  overlays, plugin settings. A slider drag counts as one step.
-- **Settings panel**: the sidebar is a dock. Drag its title bar to float it as its own window
-  (handy on a second screen), double-click the title to float / re-dock, or drag it to the left
-  side. View > Settings panel brings it back if you close it. It always fits its width, so
-  Lock and Reset are never off-screen, and it remembers where you left it.
-- **Light and dark theme**: View > Theme switches the whole app (and the preview background) between
-  Light and Dark. It is remembered for next time.
-- **Close all**: the button above the settings panel minimises every category in one click.
-- **Sidebar categories**: each category (Photos, Crop, Canvas size, and one per plugin: Alpha Overlays,
-  Background Removal, Colour & Brightness, Crop Shapes, Filters, Pattern / Poster, Text) starts minimised; click its title to open it.
-  **Reset** puts just that category back to its defaults (Undo brings it back).
-  **Lock** greys the category out, and stops it being changed by dragging in the previews too.
-- **Mouse wheel safety**: the wheel only changes a slider / box after you have clicked it;
-  until then it just scrolls the sidebar.
-- **Crop pane** (left): drag on the image to draw a crop box, or type exact pixel values.
-- **Preview pane** (right): shows the final result live, next to the crop pane. The
-  Crop / Preview buttons above hide or show each pane.
-- **Zoom** either pane: mouse wheel (towards the cursor) or the - + Fit 1:1 buttons.
-  Move the view with middle-button or right-button drag, or Alt + left drag.
-  When you zoom the preview in, it re-renders the visible part sharply.
-- Resize: set width/height in pixels (aspect lock on by default) and DPI.
-  The "Print size" line shows the physical size at that DPI.
-- Export (Ctrl+E): PNG, JPEG, TIFF or WebP. The DPI is written into the file.
+  Mac with Apple silicon (M1 or       `EKsImageWise-1.0.0-arm64.dmg`
+  newer)                              
 
-- **Composition (several photos on one print)**: open the first picture, then use
-  File > Add photo to composition (or **Add photo...** in the Photos box, or drop more
-  files onto the window). Each photo is its own layer: click it in the Preview to select it,
-  drag to move, drag the yellow corner handle (or Shift + wheel) to resize, and use the
-  Rotate / Opacity sliders. Up / Down change the layer order. The **Crop** and
-  **Background removal** categories act on the selected photo, so every photo can have
-  its own crop and cut-out. "Fill canvas" stretches a photo over the whole canvas (the
-  default for the first photo); untick it to place the photo freely. Set the print size
-  (pixels or cm) and a canvas colour in **Canvas size / output**. In a pattern, every
-  visible photo is mixed into the repeat.
-- **Crop shapes** (the *Crop Shapes* plugin): crop the selected photo to a shape taken from a folder of
-  shape pictures. Type or browse to the folder in the plugin's category (the default is
-  `<home>/EKImageWise/shapes`; sub-folders are included) and click a shape in the picture list. A shape
-  picture can be a PNG / WebP / TIFF with transparency (the visible part is the shape), or a plain
-  picture with a dark shape on a light background or the other way round (use *Invert shape* if the
-  guess is wrong). The shape fits inside the crop box and scales with it (resize the box in the Crop
-  pane, or use *Shape size*), and can be **rotated** with the Rotate slider; everything outside the shape
-  is transparent. Optional outline with colour and width. Shapes work on every photo in a composition
-  and in patterns. The app comes with no shapes: add your own. Switching the plugin off, or deleting
-  `plugins/crop_shapes.py`, removes crop shapes from the app.
-- **Canvas background**: in Canvas size / output choose Transparent, a Solid colour, or a
-  two-colour **Gradient** (any angle, or radial from the centre).
-- **Plugins**: nearly every feature beyond cropping, resizing and composing is a plugin, each with its own
-  category in the sidebar, a tick to switch it on or off, and its own Reset and Lock. Delete a plugin's
-  file from the `plugins` folder and that feature is gone from the app. The built-in ones:
-  * **Background Removal** - cuts the subject out of the selected photo with an AI model (first run
-    downloads the model unless it was bundled in the installer). *Show cut-out* toggles it, *Edge shrink*
-    and *Feather* tidy the edge instantly. Every photo can have its own cut-out.
-  * **Alpha Overlays** - up to four alpha pictures from your own folder on top of everything
-    ("Choose alpha folder..." once, it is remembered). Pick one from a layer's drop-down, then in Preview
-    drag it to move, drag the corner handle or Shift + wheel to resize; Size, Opacity, Visible, Centre
-    and Up / Down (layer order) are in the layer's box. They keep their place for the next image.
-  * **Pattern / Poster** - tick "Tile the image as a pattern" to repeat the photos across a poster-size
-    canvas: poster and tile size in cm, gap, stagger (brick / half-drop), random rotation (Shuffle for a
-    new arrangement), background colour or transparency. "Seamless repeat" adjusts the spacing so the
-    poster repeats perfectly side by side. While it is on, the Canvas size controls are greyed out
-    (the poster size sets the canvas) and photos can't be dragged (they are the tiles).
-  * **Crop Shapes** - see above.
-  * **Colour & Brightness** - brightness, contrast and saturation sliders.
-  * **Filters** - black & white, sepia, invert, blur, sharpen, vignette, posterize, solarize, emboss, line
-    drawing, pixelate, film grain, hue shift, warm/cool tint, duotone, gradient map and gradient overlay
-    (colours, angle, radial, blend mode, opacity); tick the ones you want.
-  * **Text** - several text boxes with any installed font (or a font file), size in cm, bold / italic /
-    underline / strike-through, colour, alignment, line and letter spacing, position, rotation, opacity,
-    outline (colour and width) and drop shadow (colour, offset, blur, opacity).
-  See `plugins/README.md` and `plugins/_template.py` to write your own.
+  Mac with an Intel processor         `EKsImageWise-1.0.0-x64.dmg`
+  -----------------------------------------------------------------------
 
-The original image is never changed; edits are stored as settings and applied
-at export time (non-destructive).
+The filenames above describe the planned 1.0.0 installer names. Check
+the Releases page for the current published version and its exact
+download files.
 
-## Project layout
+## Installation
 
-    main.py                      entry point
-    imagewise/engine/document.py edits + rendering + export (no UI code)
-    imagewise/engine/background.py  applies a photo's cut-out mask + edge refinement (the AI is in the plugin)
-    imagewise/engine/blend.py       small image-blending helpers
-    imagewise/engine/effects.py     hook that lets plugins change the picture
-    imagewise/plugins/              plugin API (api.py) and loader (loader.py)
-    imagewise/ui/plugin_manager.py  sidebar boxes + plugin manager dialog
-    imagewise/engine/photo.py       one picture in the composition (crop, cut-out, placement)
-    imagewise/engine/history.py     undo / redo history
-    imagewise/ui/photos_panel.py    the Photos category
-    imagewise/ui/category_box.py    collapsible category with Lock and Reset
-    imagewise/ui/wheel_guard.py     click-before-scroll protection
-    imagewise/engine/shapes.py      crop shapes (loaded from picture files)
-    imagewise/engine/gradient.py    colour gradients
-    plugins/*.py                    the built-in plugins: alpha_overlays, background_removal, colour_brightness,
-                                    crop_shapes, filters, pattern_poster, text_tool
-    main.py, splash.png, Icon_1.png  start-up file, splash screen and taskbar icon (see below)
-    plugins/                        built-in plugins and the plugin template
-    imagewise/ui/canvas.py       image display + crop dragging
-    imagewise/ui/main_window.py  window, controls, wiring
+### Windows
 
+1.  Download the Windows `.exe` installer from the [Releases
+    page](https://github.com/EnglishKnight79/EK-s-ImageWise/releases).
+2.  Open the downloaded installer.
+3.  Follow the setup wizard.
+4.  When installation is complete, launch **EK's ImageWise** from the
+    Start menu or its desktop shortcut, if you selected one.
 
+Windows may display a Microsoft Defender SmartScreen warning because the
+installer may not be code-signed. Only continue if you downloaded it
+from this project's official GitHub Releases page and you trust the
+source.
+
+### macOS
+
+1.  Download the `.dmg` file that matches your Mac: **arm64** for Apple
+    silicon, or **x64** for Intel.
+2.  Open the downloaded disk image.
+3.  Follow the installation instructions shown in the disk image.
+4.  Eject the disk image when you have finished installing.
+
+If macOS displays a security warning, it may be because the application
+is not signed or notarized. Only proceed if you downloaded it from this
+project's official GitHub Releases page and you are comfortable opening
+it.
+
+## Getting started
+
+1.  Open EK's ImageWise.
+2.  Load an image into the application.
+3.  Choose the editing tool or plugin you want to use.
+4.  Make your changes and review the result.
+5.  Save or export your finished work using the options available in the
+    application.
+
+Tool names and available options may vary between versions as the
+application develops.
+
+## Background removal
+
+ImageWise includes a background-removal feature. The packaged installers
+are intended to include the required models so that this feature can
+work offline after installation. The first use may take a little longer
+while the feature initializes.
+
+## Help and troubleshooting
+
+-   **The installer will not open:** Make sure you downloaded the
+    installer for your operating system and processor type.
+-   **macOS or Windows displays a security warning:** See the
+    installation notes above and verify that the download came from the
+    official Releases page.
+-   **A feature is not available:** Check that you are using the latest
+    published version.
+-   **You need help:** Open an issue on the [GitHub Issues
+    page](https://github.com/EnglishKnight79/EK-s-ImageWise/issues).
+    Include your operating system, application version, and a
+    description of what happened. Do not include private images or other
+    personal information.
+
+## Project information
+
+-   **Project:** EK's ImageWise
+-   **Downloads:** [GitHub
+    Releases](https://github.com/EnglishKnight79/EK-s-ImageWise/releases)
+-   **Report a problem:** [GitHub
+    Issues](https://github.com/EnglishKnight79/EK-s-ImageWise/issues)
+
+------------------------------------------------------------------------
+
+*EK's ImageWise is an independently developed desktop application.
+Please refer to the notices included with the application for
+third-party software acknowledgements and licensing information.*
